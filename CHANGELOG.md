@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.15.0](https://github.com/kazukazu123123/pow/compare/v3.14.61...v3.15.0) (2026-03-06)
+
+
+### Features
+
+* support Discord's Audio & Video End-to-End Encryption (DAVE) protocol ([#1987](https://github.com/kazukazu123123/pow/issues/1987)) ([e77caaf](https://github.com/kazukazu123123/pow/commit/e77caaf9981de1040aa1a76fce8f40df791d0051))
+
+
+### Bug Fixes
+
+* **ci:** unblock ffmpeg-static binary download in CI ([#1977](https://github.com/kazukazu123123/pow/issues/1977)) ([a96acbd](https://github.com/kazukazu123123/pow/commit/a96acbd6e9541891cc252d4dc5b38cd84e990150))
+
+
+### Dependencies
+
+* update dependency @discordjs/voice to v0.19.0 ([#1985](https://github.com/kazukazu123123/pow/issues/1985)) ([9acd8cf](https://github.com/kazukazu123123/pow/commit/9acd8cf45f3a8852def206f19c214c608b57e317))
+* update dependency discord.js to v14.25.1 ([#1974](https://github.com/kazukazu123123/pow/issues/1974)) ([247ec83](https://github.com/kazukazu123123/pow/commit/247ec83b3a66082bb092a78b2aed47e51b11fe05))
+* update dependency ffmpeg-static to v5.3.0 ([#1976](https://github.com/kazukazu123123/pow/issues/1976)) ([aae6e7a](https://github.com/kazukazu123123/pow/commit/aae6e7a8747433aebad5886e97c5c5949e841f9a))
+
+
+### Build System
+
+* **deps:** update buildpack-deps:bookworm docker digest to fc140b7 ([#1971](https://github.com/kazukazu123123/pow/issues/1971)) ([054fd2e](https://github.com/kazukazu123123/pow/commit/054fd2e0e77c374932e4e4f050592c5c6e6703cc))
+* **deps:** update docker/dockerfile docker tag to v1.22.0 ([#1998](https://github.com/kazukazu123123/pow/issues/1998)) ([214df28](https://github.com/kazukazu123123/pow/commit/214df28c9d323eec17175bd90a8d69d4ec1fbf64))
+* **deps:** update gcr.io/distroless/cc-debian12:nonroot docker digest to 7e5b8df ([#1972](https://github.com/kazukazu123123/pow/issues/1972)) ([f38fff0](https://github.com/kazukazu123123/pow/commit/f38fff04a7f05172fb72521216d5f241d6b79b5b))
+* **deps:** update quay.io/curl/curl-base docker tag to v8.18.0 ([#1999](https://github.com/kazukazu123123/pow/issues/1999)) ([6fe346f](https://github.com/kazukazu123123/pow/commit/6fe346fe37ff018b8a23e1bb041621c2da370d23))
+
 ## [3.14.61](https://github.com/kazukazu123123/pow/compare/v3.14.60...v3.14.61) (2025-07-05)
 
 
