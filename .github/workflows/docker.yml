@@ -20,7 +20,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   # tool versions
   # renovate: datasource=github-releases depName=docker/buildx
-  BUILDX_VERSION: v0.25.0
+  BUILDX_VERSION: v0.32.1
   # renovate: datasource=github-releases depName=moby/buildkit
   BUILDKIT_VERSION: v0.23.2
 
