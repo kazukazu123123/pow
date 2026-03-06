@@ -44,7 +44,7 @@
     "@tsconfig/strictest": "2.0.8",
     "@types/debug": "4.1.12",
     "@types/node": "24.11.0",
-    "chokidar": "4.0.3",
+    "chokidar": "5.0.0",
     "dotenv": "17.2.0",
     "eslint": "9.39.3",
     "eslint-config-prettier": "10.1.5",
