@@ -26,6 +26,7 @@
     "@prisma/client": "6.11.1",
     "@sapphire/framework": "5.3.6",
     "@sapphire/plugin-subcommands": "7.0.1",
+    "@snazzah/davey": "0.1.10",
     "bufferutil": "4.0.9",
     "debug": "4.4.1",
     "discord-emoji": "2.5.3",
