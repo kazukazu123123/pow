@@ -40,7 +40,7 @@
     "@swc/cli": "0.7.7",
     "@swc/core": "1.12.9",
     "@tsconfig/node22": "22.0.5",
-    "@tsconfig/strictest": "2.0.5",
+    "@tsconfig/strictest": "2.0.8",
     "@types/debug": "4.1.12",
     "@types/node": "24.11.0",
     "chokidar": "4.0.3",
