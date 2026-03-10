@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.15.1](https://github.com/kazukazu123123/pow/compare/v3.15.0...v3.15.1) (2026-03-10)
+
+
+### Build System
+
+* fix Dockerfile to enable pnpm execution within the container ([#2009](https://github.com/kazukazu123123/pow/issues/2009)) ([6f60fb0](https://github.com/kazukazu123123/pow/commit/6f60fb0615dd1f62d6a3259add35fe1129ce3048))
+
 ## [3.15.0](https://github.com/kazukazu123123/pow/compare/v3.14.61...v3.15.0) (2026-03-06)
 
 
