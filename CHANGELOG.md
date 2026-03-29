@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.15.2](https://github.com/kazukazu123123/pow/compare/v3.15.1...v3.15.2) (2026-03-29)
+
+
+### Dependencies
+
+* update dependency @discordjs/voice to v0.19.2 ([#2031](https://github.com/kazukazu123123/pow/issues/2031)) ([cde6948](https://github.com/kazukazu123123/pow/commit/cde6948a2deb2f3ec52aa682a3abbe9752464b62))
+* update dependency @sapphire/framework to v5.5.0 ([#2004](https://github.com/kazukazu123123/pow/issues/2004)) ([89130cd](https://github.com/kazukazu123123/pow/commit/89130cde6ec350a050e2571e2caaa2949fff4836))
+* update dependency bufferutil to v4.1.0 ([#2005](https://github.com/kazukazu123123/pow/issues/2005)) ([6aa4328](https://github.com/kazukazu123123/pow/commit/6aa4328efae7d47290873691b000a8dda358c310))
+* update dependency emoji-regex to v10.6.0 ([#2006](https://github.com/kazukazu123123/pow/issues/2006)) ([013339b](https://github.com/kazukazu123123/pow/commit/013339b807bf36a6df464d8d9127ea8bc4cf0d63))
+* update node.js to v24.14.1 ([#2035](https://github.com/kazukazu123123/pow/issues/2035)) ([3e1ae13](https://github.com/kazukazu123123/pow/commit/3e1ae135c322f70538807ce72f2224d89843e0a2))
+
+
+### Build System
+
+* **deps:** update buildpack-deps:bookworm docker digest to 58c016c ([#2027](https://github.com/kazukazu123123/pow/issues/2027)) ([2018061](https://github.com/kazukazu123123/pow/commit/201806127758a197e33b19715a0840506ab9e413))
+
 ## [3.15.1](https://github.com/kazukazu123123/pow/compare/v3.15.0...v3.15.1) (2026-03-10)
 
 
