@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.22.0@sha256:4a43a54dd1fedceb30ba47e76cfcf2b47304f4161c0caeac2db1c61804ea3c91
 
 # ベースとするイメージを定義
-FROM ubuntu:devel@sha256:730382b4a53a3c4a1498b7a36f11a62117f133fe6e73b01bb91303ed2ad87cdd AS base
+FROM ubuntu:devel@sha256:a072b64036a738e55bff8f9a9682cbb893bf20c213772effc1de8dee8df1cea9 AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
