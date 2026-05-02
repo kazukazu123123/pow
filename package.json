@@ -37,7 +37,7 @@
     "zlib-sync": "0.1.10"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.4",
+    "@eslint/js": "10.0.1",
     "@swc/cli": "0.8.1",
     "@swc/core": "1.15.24",
     "@tsconfig/node22": "22.0.5",
@@ -46,7 +46,7 @@
     "@types/node": "24.12.2",
     "chokidar": "5.0.0",
     "dotenv": "17.4.1",
-    "eslint": "9.39.4",
+    "eslint": "10.2.1",
     "eslint-config-prettier": "10.1.5",
     "globals": "17.4.0",
     "husky": "9.1.7",
