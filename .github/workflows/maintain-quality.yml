@@ -47,6 +47,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Install node-gyp
+        run: pnpm add --global node-gyp
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --strict-peer-dependencies
 
