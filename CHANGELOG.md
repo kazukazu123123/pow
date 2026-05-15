@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.15.2](https://github.com/kazukazu123123/pow/compare/v3.15.1...v3.15.2) (2026-05-15)
+
+
+### Dependencies
+
+* update dependency @discordjs/voice to v0.19.2 ([#2031](https://github.com/kazukazu123123/pow/issues/2031)) ([cde6948](https://github.com/kazukazu123123/pow/commit/cde6948a2deb2f3ec52aa682a3abbe9752464b62))
+* update dependency @sapphire/framework to v5.5.0 ([#2004](https://github.com/kazukazu123123/pow/issues/2004)) ([89130cd](https://github.com/kazukazu123123/pow/commit/89130cde6ec350a050e2571e2caaa2949fff4836))
+* update dependency @snazzah/davey to v0.1.11 ([#2052](https://github.com/kazukazu123123/pow/issues/2052)) ([4523907](https://github.com/kazukazu123123/pow/commit/452390711bd8588c8d8337e4a70c5440edbefa4e))
+* update dependency bufferutil to v4.1.0 ([#2005](https://github.com/kazukazu123123/pow/issues/2005)) ([6aa4328](https://github.com/kazukazu123123/pow/commit/6aa4328efae7d47290873691b000a8dda358c310))
+* update dependency discord.js to v14.26.2 ([#2039](https://github.com/kazukazu123123/pow/issues/2039)) ([f44f23e](https://github.com/kazukazu123123/pow/commit/f44f23e277cfb2087782a609f73361b6ef17cd7d))
+* update dependency discord.js to v14.26.3 ([#2059](https://github.com/kazukazu123123/pow/issues/2059)) ([7409ec6](https://github.com/kazukazu123123/pow/commit/7409ec647b7b8b4fd8cc280b1b5f6f59156d86ed))
+* update dependency discord.js to v14.26.4 ([#2075](https://github.com/kazukazu123123/pow/issues/2075)) ([492d5f6](https://github.com/kazukazu123123/pow/commit/492d5f6de7abddc0ef2c9c3956b33b2ec61215fd))
+* update dependency emoji-regex to v10.6.0 ([#2006](https://github.com/kazukazu123123/pow/issues/2006)) ([013339b](https://github.com/kazukazu123123/pow/commit/013339b807bf36a6df464d8d9127ea8bc4cf0d63))
+* update dependency mariadb to v3.5.2 ([#2056](https://github.com/kazukazu123123/pow/issues/2056)) ([c25e913](https://github.com/kazukazu123123/pow/commit/c25e9130adda7089151cf1fe9ba3535544e5568c))
+* update node.js to v24.14.1 ([#2035](https://github.com/kazukazu123123/pow/issues/2035)) ([3e1ae13](https://github.com/kazukazu123123/pow/commit/3e1ae135c322f70538807ce72f2224d89843e0a2))
+* update node.js to v24.15.0 ([#2073](https://github.com/kazukazu123123/pow/issues/2073)) ([fe192bc](https://github.com/kazukazu123123/pow/commit/fe192bc77cdeaa3b676c51c20253318e6c436b58))
+
+
+### Build System
+
+* **deps:** update buildpack-deps:bookworm docker digest to 58c016c ([#2027](https://github.com/kazukazu123123/pow/issues/2027)) ([2018061](https://github.com/kazukazu123123/pow/commit/201806127758a197e33b19715a0840506ab9e413))
+* **deps:** update buildpack-deps:bookworm docker digest to 80cfc6b ([#2081](https://github.com/kazukazu123123/pow/issues/2081)) ([8052abe](https://github.com/kazukazu123123/pow/commit/8052abe259c1996614fd5396e4d36ec9066cecbe))
+* **deps:** update buildpack-deps:bookworm docker digest to f5eb37e ([#2060](https://github.com/kazukazu123123/pow/issues/2060)) ([85ebfb6](https://github.com/kazukazu123123/pow/commit/85ebfb65d66aac2ba9ae97db02ba0f8b7a12a7ff))
+* **deps:** update docker/dockerfile docker tag to v1.23.0 ([#2053](https://github.com/kazukazu123123/pow/issues/2053)) ([99597a9](https://github.com/kazukazu123123/pow/commit/99597a9441e77693ec693c36b4c4b82c6728dd79))
+* **deps:** update gcr.io/distroless/cc-debian12:nonroot docker digest to e2d29ae ([#2061](https://github.com/kazukazu123123/pow/issues/2061)) ([e4f167a](https://github.com/kazukazu123123/pow/commit/e4f167a833823e69d2fdc47bcb87a9a71ad3028c))
+* **deps:** update quay.io/curl/curl-base docker tag to v8.19.0 ([#2066](https://github.com/kazukazu123123/pow/issues/2066)) ([8d436a0](https://github.com/kazukazu123123/pow/commit/8d436a0a3be876a4870ab5d3c9605e96e0d66f0a))
+* **deps:** update quay.io/curl/curl-base:8.19.0 docker digest to 67b34c7 ([#2077](https://github.com/kazukazu123123/pow/issues/2077)) ([7d4ad12](https://github.com/kazukazu123123/pow/commit/7d4ad128dd7f43d614662604319fc5305fcc40e1))
+
 ## [3.15.1](https://github.com/kazukazu123123/pow/compare/v3.15.0...v3.15.1) (2026-03-10)
 
 
