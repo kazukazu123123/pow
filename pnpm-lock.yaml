@@ -67,8 +67,8 @@ importers:
         specifier: 4.1.12
         version: 4.1.12
       '@types/node':
-        specifier: 24.12.4
-        version: 24.12.4
+        specifier: 24.13.0
+        version: 24.13.0
       chokidar:
         specifier: 5.0.0
         version: 5.0.0
@@ -685,8 +685,8 @@ packages:
   '@types/node@10.17.60':
     resolution: {integrity: sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==}
 
-  '@types/node@24.12.4':
-    resolution: {integrity: sha512-GUUEShf+PBCGW2KaXwcIt3Yk+e3pkKwWKb9GSyM9WQVE+ep2jzmHdGsHzu4wgcZy5fN9FBdVzjpBQsYlpfpgLA==}
+  '@types/node@24.13.0':
+    resolution: {integrity: sha512-5vtOqGQr4NJKeEzV441FcOi2MeG9UTWq9LqVLGneDdu4vlX17H8kQ2PA2UmNwCUGPVDj4oBjNhS7ReVEIWJJrg==}
 
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
@@ -1811,8 +1811,8 @@ packages:
   unbzip2-stream@1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
 
-  undici-types@7.16.0:
-    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+  undici-types@7.18.2:
+    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
   undici@6.24.1:
     resolution: {integrity: sha512-sC+b0tB1whOCzbtlx20fx3WgCXwkW627p4EA9uM+/tNNPkSS+eSEld6pAs9nDv7WbY1UUljBMYPtu9BCOrCWKA==}
@@ -2413,13 +2413,13 @@ snapshots:
 
   '@types/node@10.17.60': {}
 
-  '@types/node@24.12.4':
+  '@types/node@24.13.0':
     dependencies:
-      undici-types: 7.16.0
+      undici-types: 7.18.2
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 24.12.4
+      '@types/node': 24.13.0
 
   '@typescript-eslint/eslint-plugin@8.36.0(@typescript-eslint/parser@8.36.0(eslint@9.39.4(jiti@2.4.2))(typescript@5.8.3))(eslint@9.39.4(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
@@ -3206,7 +3206,7 @@ snapshots:
   mariadb@3.5.2:
     dependencies:
       '@types/geojson': 7946.0.16
-      '@types/node': 24.12.4
+      '@types/node': 24.13.0
       denque: 2.1.0
       iconv-lite: 0.7.2
       lru-cache: 10.4.3
@@ -3557,7 +3557,7 @@ snapshots:
       buffer: 5.7.1
       through: 2.3.8
 
-  undici-types@7.16.0: {}
+  undici-types@7.18.2: {}
 
   undici@6.24.1: {}
 
