@@ -51,7 +51,7 @@
     "globals": "17.11.0",
     "husky": "9.1.7",
     "npm-run-all2": "9.0.1",
-    "prettier": "3.8.3",
+    "prettier": "3.9.6",
     "prisma": "6.19.3",
     "typescript": "5.8.3",
     "typescript-eslint": "8.36.0"
