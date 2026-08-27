@@ -34,9 +34,15 @@ export async function getUserSetting(id: string): Promise<userSetting> {
       },
     })
 
+    // A concurrent setUserSetting may have refreshed the cache while
+    // the query was running, so do not overwrite it with the stale result.
+    const updatedCachedUserSetting = cachedUserSettings.get(id)
+    if (updatedCachedUserSetting !== undefined) return updatedCachedUserSetting
+
     if (userSetting === null) {
       return await setUserSetting(randomUserSetting(BigInt(id)))
     }
+    cachedUserSettings.set(id, userSetting)
     return userSetting
   } catch (err) {
     if (
@@ -52,7 +58,6 @@ export async function getUserSetting(id: string): Promise<userSetting> {
 export async function setUserSetting(
   setting: userSetting,
 ): Promise<userSetting> {
-  cachedUserSettings.delete(String(setting.id))
   try {
     const userSetting = await prisma.userSetting.upsert({
       where: { id: BigInt(setting.id) },
@@ -69,6 +74,8 @@ export async function setUserSetting(
       },
     })
 
+    // Update the cache only after the DB write succeeds.
+    cachedUserSettings.set(String(setting.id), userSetting)
     return userSetting
   } catch (err) {
     if (
