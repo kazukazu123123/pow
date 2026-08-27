@@ -24,7 +24,7 @@
   "dependencies": {
     "@discordjs/voice": "0.19.2",
     "@prisma/client": "6.19.3",
-    "@sapphire/framework": "5.5.0",
+    "@sapphire/framework": "5.5.1",
     "@sapphire/plugin-subcommands": "7.0.1",
     "@snazzah/davey": "0.1.11",
     "bufferutil": "4.1.0",
