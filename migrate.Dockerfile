@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.24.0@sha256:87999aa3d42bdc6bea60565083ee17e86d1f3339802f543c0d03998580f9cb89
+# syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
 
 # ベースとするイメージを定義
 FROM ubuntu:devel@sha256:694b773ee7e0d0b55ca74c095ac3309055589e7cbfaf3100f0b226c38c6936fa AS base
