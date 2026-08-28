@@ -3,5 +3,8 @@ FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 
 echo "$FILES" | xargs ./node_modules/.bin/eslint --no-warn-ignored
 
-echo "$FILES" | xargs ./node_modules/.bin/prettier --ignore-unknown --write \
+echo "$FILES" | xargs ./node_modules/.bin/oxfmt \
+  --disable-nested-config \
+  --no-error-on-unmatched-pattern \
+  --write \
 && echo "$FILES" | xargs git add
