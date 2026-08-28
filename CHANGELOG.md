@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.15.3](https://github.com/kazukazu123123/pow/compare/v3.15.2...v3.15.3) (2026-08-28)
+
+
+### Dependencies
+
+* update dependency @sapphire/framework to v5.5.1 ([#2134](https://github.com/kazukazu123123/pow/issues/2134)) ([2c7edbb](https://github.com/kazukazu123123/pow/commit/2c7edbbdbfc78f9be94b0fefe8f3d8c20679ec89))
+* update dependency @snazzah/davey to v0.1.12 ([#2135](https://github.com/kazukazu123123/pow/issues/2135)) ([3c22269](https://github.com/kazukazu123123/pow/commit/3c22269c95f0a63bad4fd07f65f0d6ed2e878516))
+* update dependency discord.js to v14.27.0 ([#2116](https://github.com/kazukazu123123/pow/issues/2116)) ([07ba5dd](https://github.com/kazukazu123123/pow/commit/07ba5ddf625df1e270a07a6fa8a9ca8e0482b4a5))
+* update dependency mariadb to v3.5.3 ([#2142](https://github.com/kazukazu123123/pow/issues/2142)) ([2966e40](https://github.com/kazukazu123123/pow/commit/2966e4055347e44e35c049ef518c070e204ed1e7))
+* update distroless runner base image from debian12 to debian13 ([#2151](https://github.com/kazukazu123123/pow/issues/2151)) ([7fc3ab6](https://github.com/kazukazu123123/pow/commit/7fc3ab6b62336c633f4d5185847e6c0037f60ad3))
+
+
+### Build System
+
+* **deps:** update buildpack-deps base image from bookworm to 26.04 ([#2149](https://github.com/kazukazu123123/pow/issues/2149)) ([484fd82](https://github.com/kazukazu123123/pow/commit/484fd82cc88c6ce5b146c506224fbfc518c8680e))
+* **deps:** update jq image from 1.7 to 1.8.2 ([#2150](https://github.com/kazukazu123123/pow/issues/2150)) ([76b6cce](https://github.com/kazukazu123123/pow/commit/76b6cce5afecd9f9297b7a4c84fb99c54e36f02a))
+
 ## [3.15.2](https://github.com/kazukazu123123/pow/compare/v3.15.1...v3.15.2) (2026-08-27)
 
 
