@@ -1,0 +1,8 @@
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@swc/core': true
+  bufferutil: true
+  ffmpeg-static: true
+  prisma: true
+  zlib-sync: true
