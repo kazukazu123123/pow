@@ -59,17 +59,5 @@
   "author": "kazukazu123123",
   "license": "MIT",
   "description": "",
-  "type": "module",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@prisma/client",
-      "@prisma/engines",
-      "@swc/core",
-      "bufferutil",
-      "esbuild",
-      "ffmpeg-static",
-      "prisma",
-      "zlib-sync"
-    ]
-  }
+  "type": "module"
 }
