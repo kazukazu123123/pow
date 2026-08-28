@@ -1,4 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>mogyugyu/renovate-config:app"]
+  "extends": ["github>mogyugyu/renovate-config:app"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["prisma", "@prisma/client"],
+      "groupName": "prisma",
+      "matchUpdateTypes": ["digest", "patch", "minor", "major"]
+    }
+  ]
 }
