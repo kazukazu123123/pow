@@ -87,9 +87,9 @@ jobs:
       matrix:
         include:
           - platform: linux/amd64
-            on: ubuntu-24.04
+            on: ubuntu-26.04
           - platform: linux/arm64
-            on: ubuntu-24.04-arm
+            on: ubuntu-26.04-arm
 
     runs-on: ${{ matrix.on }}
 
@@ -187,7 +187,7 @@ jobs:
     permissions:
       packages: write
     needs: [env]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
