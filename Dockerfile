@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.26.0@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+# syntax=docker/dockerfile:1.27.0@sha256:bde3983e9c939224420ddaf6b784cc30e09b035a4dea01f581230c50809f372e
 
 # ビルド時にベースとするイメージを定義
 FROM buildpack-deps:26.04@sha256:2abf965364833fc3591fee2e7c823ee8e61c495fad6c15c1738fd9a6e9d04610 AS base-build
