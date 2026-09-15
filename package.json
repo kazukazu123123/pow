@@ -54,7 +54,7 @@
     "oxfmt": "0.66.0",
     "prisma": "6.19.3",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.36.0"
+    "typescript-eslint": "8.70.0"
   },
   "author": "kazukazu123123",
   "license": "MIT",
