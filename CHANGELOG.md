@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.15.3](https://github.com/kazukazu123123/pow/compare/v3.15.2...v3.15.3) (2026-10-10)
+
+
+### Dependencies
+
+* update dependency @sapphire/framework to v5.5.1 ([#2134](https://github.com/kazukazu123123/pow/issues/2134)) ([2c7edbb](https://github.com/kazukazu123123/pow/commit/2c7edbbdbfc78f9be94b0fefe8f3d8c20679ec89))
+* update dependency @snazzah/davey to v0.1.12 ([#2135](https://github.com/kazukazu123123/pow/issues/2135)) ([3c22269](https://github.com/kazukazu123123/pow/commit/3c22269c95f0a63bad4fd07f65f0d6ed2e878516))
+* update dependency discord.js to v14.27.0 ([#2116](https://github.com/kazukazu123123/pow/issues/2116)) ([07ba5dd](https://github.com/kazukazu123123/pow/commit/07ba5ddf625df1e270a07a6fa8a9ca8e0482b4a5))
+* update dependency emoji-regex to v11 ([#2191](https://github.com/kazukazu123123/pow/issues/2191)) ([43b9883](https://github.com/kazukazu123123/pow/commit/43b9883add7fc31a9ef737b16c9ddb14f563000d))
+* update dependency mariadb to v3.5.3 ([#2142](https://github.com/kazukazu123123/pow/issues/2142)) ([2966e40](https://github.com/kazukazu123123/pow/commit/2966e4055347e44e35c049ef518c070e204ed1e7))
+* update dependency mariadb to v3.5.4 [security] ([#2187](https://github.com/kazukazu123123/pow/issues/2187)) ([86963d4](https://github.com/kazukazu123123/pow/commit/86963d41abb61d7f2df969b4523fe0afd8967057))
+* update distroless runner base image from debian12 to debian13 ([#2151](https://github.com/kazukazu123123/pow/issues/2151)) ([7fc3ab6](https://github.com/kazukazu123123/pow/commit/7fc3ab6b62336c633f4d5185847e6c0037f60ad3))
+
+
+### Build System
+
+* **deps:** update buildpack-deps base image from bookworm to 26.04 ([#2149](https://github.com/kazukazu123123/pow/issues/2149)) ([484fd82](https://github.com/kazukazu123123/pow/commit/484fd82cc88c6ce5b146c506224fbfc518c8680e))
+* **deps:** update buildpack-deps docker tag to v26.10 ([#2159](https://github.com/kazukazu123123/pow/issues/2159)) ([5bd527d](https://github.com/kazukazu123123/pow/commit/5bd527da25391e21bc5f2ca99dd8f9c57fb7814e))
+* **deps:** update buildpack-deps:26.10 docker digest to 1842c87 ([#2168](https://github.com/kazukazu123123/pow/issues/2168)) ([8f8d07c](https://github.com/kazukazu123123/pow/commit/8f8d07cc7b2217f3ca682178be0a5ff5321e637e))
+* **deps:** update buildpack-deps:26.10 docker digest to 54268a6 ([#2166](https://github.com/kazukazu123123/pow/issues/2166)) ([1175e2f](https://github.com/kazukazu123123/pow/commit/1175e2fcf1a4d0d16fdecae6de73eb7912817013))
+* **deps:** update docker/dockerfile docker tag to v1.27.0 ([#2160](https://github.com/kazukazu123123/pow/issues/2160)) ([120d56a](https://github.com/kazukazu123123/pow/commit/120d56a59c16316c0e275a869c6e287492658549))
+* **deps:** update docker/dockerfile docker tag to v1.28.0 ([#2182](https://github.com/kazukazu123123/pow/issues/2182)) ([fbf0475](https://github.com/kazukazu123123/pow/commit/fbf0475a8ef18fde686847e34ddbfe297e480b70))
+* **deps:** update gcr.io/distroless/cc-debian13:nonroot docker digest to 54df941 ([#2169](https://github.com/kazukazu123123/pow/issues/2169)) ([0ae2be8](https://github.com/kazukazu123123/pow/commit/0ae2be84c747018a5990a50c2cee3b1f3a4de035))
+* **deps:** update gcr.io/distroless/cc-debian13:nonroot docker digest to e792ab3 ([#2181](https://github.com/kazukazu123123/pow/issues/2181)) ([a4d987e](https://github.com/kazukazu123123/pow/commit/a4d987e3fa66f071521ac3df3515edd7a80a52af))
+* **deps:** update jq image from 1.7 to 1.8.2 ([#2150](https://github.com/kazukazu123123/pow/issues/2150)) ([76b6cce](https://github.com/kazukazu123123/pow/commit/76b6cce5afecd9f9297b7a4c84fb99c54e36f02a))
+* **deps:** update quay.io/curl/curl-base docker tag to v8.22.0 ([#2158](https://github.com/kazukazu123123/pow/issues/2158)) ([d919f8c](https://github.com/kazukazu123123/pow/commit/d919f8cfef14395558edd5dd02d1d5d470f5576c))
+
 ## [3.15.2](https://github.com/kazukazu123123/pow/compare/v3.15.1...v3.15.2) (2026-08-27)
 
 
