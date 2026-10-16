@@ -20,7 +20,7 @@
     "check:types": "tsc",
     "prepare": "node .husky/install.mjs"
   },
-  "packageManager": "pnpm@10.34.6+sha512.7e1ae66a83a9143c118cc1944f37cc4f2b8acddeda4b001cfa78908f6e46e45e15292739ca6c9d026426cc757e9318cc98c5551d6a16c165097b0028ba87b4e6",
+  "packageManager": "pnpm@12.13.0+sha512.1e55719bf26e809dce5c5084fdebaa64efb3da9038ae5d68a9f8a68311f1a45841c8c3b76a37298c3b66f6bcc80409a9b7f33c78a7168a3e90fb65a5d8235ae4",
   "dependencies": {
     "@discordjs/voice": "0.19.2",
     "@prisma/client": "6.19.3",
