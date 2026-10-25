@@ -48,7 +48,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install node-gyp
-        run: pnpm add --global node-gyp
+        run: pnpm add --global node-gyp@${NODE_GYP_VERSION}
+        env:
+          # renovate: datasource=npm depName=node-gyp
+          NODE_GYP_VERSION: 13.1.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --strict-peer-dependencies
