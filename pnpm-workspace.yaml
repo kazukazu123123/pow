@@ -6,3 +6,6 @@ allowBuilds:
   ffmpeg-static: true
   prisma: true
   zlib-sync: true
+engineStrict: true
+saveExact: true
+strictPeerDependencies: true

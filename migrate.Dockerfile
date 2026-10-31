@@ -1,62 +1,57 @@
 # syntax=docker/dockerfile:1.28.0@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
 
-# ベースとするイメージを定義
-FROM ubuntu:devel@sha256:ee126c2fa0249079a7e24ae3a3d29b04783ef93ab33c868751c9a1289d3fffff AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+# バージョンは package.json の devEngines.packageManager と揃える。
+FROM ghcr.io/pnpm/pnpm:12.15.0@sha256:d6148daf3ad2af8fa4ecd1aa06db73da32b2e37f63088987eea2fb375ee7f320 AS pnpm
+# => /opt/pnpm/pnpm
 
-# jqのバイナリを取得する => /jq
-FROM ghcr.io/jqlang/jq:1.8.2@sha256:b9c68867e5766576263a222e91db3de422d802069c7af70440e667a95344e486 AS fetch-jq
+FROM buildpack-deps:26.10@sha256:1842c8766efc4bc743374913dbb2196ef9da2b8f1ba6fbbb68594ba7086a65ab AS pnpm-base
+ENV PNPM_HOME=/pnpm
+ENV PATH="$PNPM_HOME/bin:$PATH"
+ENV PNPM_CONFIG_STORE_DIR=/pnpm-store
+ENV PNPM_CONFIG_CACHE_DIR=/pnpm-cache
+COPY --link --from=pnpm /opt/pnpm/pnpm /pnpm/bin/pnpm
+# => /pnpm/bin/pnpm
 
-# pnpmを取得する => /pnpm/
-FROM quay.io/curl/curl-base:8.22.0@sha256:74ee3ab5b8c634d24bcf13196920edec8a03c247217066f131e69403a6e049cd AS fetch-pnpm
-ENV SHELL="sh"
-ENV ENV="/tmp/env"
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-WORKDIR /dist
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,from=fetch-jq,source=/jq,target=/mounted-bin/jq \
-    curl -fsSL --compressed https://get.pnpm.io/install.sh | env PNPM_VERSION=$(cat package.json  | /mounted-bin/jq -r .packageManager | grep -oE '[0-9]+\.[0-9]+\.[0-9]+') sh -
-
-# .npmrcに設定を追記する => /_/.npmrc
-FROM base AS change-npmrc
+# prisma CLI は devDependencies にある。本番依存を展開しないので、node-gyp を足す段は要らない。
+FROM pnpm-base AS fetch-deps
 WORKDIR /_
-COPY --link .npmrc ./
-RUN echo "store-dir=/.pnpm-store" >> .npmrc
-
-# Node.jsとdevDependenciesを取得する => /pnpm/,/.pnpm-store/,/_/node_modules/
-FROM base AS fetch-deps
-WORKDIR /_
-COPY --link --from=fetch-pnpm /pnpm/ /pnpm/
 ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-$TARGETPLATFORM,target=/.pnpm-store/ \
-    --mount=type=bind,from=change-npmrc,source=/_/.npmrc,target=.npmrc \
-    --mount=type=bind,source=package.json,target=package.json \
+RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
+    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+    --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch --dev
+# => /_/node_modules
 
-# devDependenciesをインストールする => /_/node_modules/
-FROM base AS dev-deps
+# fetch はルートの node_modules を作らないので Link する（devDependencies だけ）。
+FROM pnpm-base AS dev-deps
 WORKDIR /_
 COPY --link --from=fetch-deps /_/node_modules/ ./node_modules/
-ARG BUILDPLATFORM
-RUN --mount=type=cache,id=pnpm-$BUILDPLATFORM,target=/.pnpm-store/ \
-    --mount=type=bind,from=fetch-deps,source=/pnpm/,target=/pnpm/ \
-    --mount=type=bind,from=change-npmrc,source=/_/.npmrc,target=.npmrc \
+ARG TARGETPLATFORM
+RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
+    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
     --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-    --mount=type=bind,source=.husky/install.mjs,target=.husky/install.mjs \
-    pnpm install --frozen-lockfile --offline --dev
+    --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
+    pnpm install --frozen-lockfile --prefer-offline --dev --ignore-scripts
+# => /_/node_modules
 
-FROM base AS runner
-USER ubuntu
+FROM busybox:1.37-musl@sha256:5cec3fc171c87218698e85a52af7087de727372aae264a787b8112901a5b0092 AS busybox
+# => /bin/busybox と applet の hardlink（/bin/sh など）
+
+FROM gcr.io/distroless/cc-debian13:nonroot@sha256:e792ab3d241a468a4fd7519ddbbebe66b49b5f365771716ea688ad40b6c6f1c2 AS runner
+ENV NODE_ENV=production
+ENV PNPM_HOME=/pnpm
+ENV PATH="$PNPM_HOME/bin:$PATH"
+# 起動時に disk / network へ触らせないための無効化（Dockerfile の runner 段と同じ理由）
+ENV PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false
+ENV PNPM_CONFIG_UPDATE_NOTIFIER=false
+ENV PNPM_CONFIG_PM_ON_FAIL=ignore
 WORKDIR /app
-# HACK(?): ここではUIDを指定する必要があります。usernameにしているとビルドできません。
-# `Error: buildx failed with: ERROR: failed to solve: invalid user index: -1`
-COPY --chown=1000 --link prisma/ prisma/
-COPY --chown=1000 --link --from=fetch-deps /pnpm/ /pnpm/
-COPY --chown=1000 --link --from=dev-deps /_/node_modules/ ./node_modules/
-COPY --chown=1000 --link .npmrc package.json ./
-ENTRYPOINT [ "pnpm", "--shell-emulator" ]
-CMD [ "db:deploy" ]
+COPY --link --from=busybox /bin/ /bin/
+COPY --link --from=pnpm /opt/pnpm/pnpm /pnpm/bin/pnpm
+COPY --link --from=dev-deps /_/node_modules/ ./node_modules/
+COPY --link prisma/ prisma/
+COPY --link package.json pnpm-workspace.yaml ./
+CMD ["pnpm", "run", "db:deploy"]
+# => /app/node_modules（lock 済みの Node.js と prisma CLI を含む）, /app/prisma, /app/package.json, /app/pnpm-workspace.yaml, /pnpm/bin/pnpm, /bin/busybox
