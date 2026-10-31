@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.28.0@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
 
 # バージョンは package.json の devEngines.packageManager と揃える。
-FROM ghcr.io/pnpm/pnpm:12.15.0@sha256:d6148daf3ad2af8fa4ecd1aa06db73da32b2e37f63088987eea2fb375ee7f320 AS pnpm
+FROM ghcr.io/pnpm/pnpm:12.17.0@sha256:172468925f0ca368313c09867081a43e298eaeb13dee8f7e4356bfad45dd8b15 AS pnpm
 # => /opt/pnpm/pnpm
 
 FROM buildpack-deps:26.10@sha256:1842c8766efc4bc743374913dbb2196ef9da2b8f1ba6fbbb68594ba7086a65ab AS pnpm-base
