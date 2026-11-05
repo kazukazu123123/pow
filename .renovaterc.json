@@ -1,6 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>mogyugyu/renovate-config:app"],
+  "extends": [
+    "github>mogyugyu/renovate-config:app",
+    "github>mogyugyu/renovate-config//custom-managers/add-checksum-versions"
+  ],
   "packageRules": [
     {
       "matchPackageNames": ["prisma", "@prisma/client"],
