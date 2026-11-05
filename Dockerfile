@@ -1,8 +1,5 @@
 # syntax=docker/dockerfile:1.28.0@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
 
-# renovate: datasource=github-releases depName=krallin/tini
-ARG TINI_VERSION=v0.19.0
-
 # バージョンは package.json の devEngines.packageManager と揃える。
 FROM ghcr.io/pnpm/pnpm:12.15.0@sha256:d6148daf3ad2af8fa4ecd1aa06db73da32b2e37f63088987eea2fb375ee7f320 AS pnpm
 # => /opt/pnpm/pnpm
@@ -16,13 +13,11 @@ COPY --link --from=pnpm /opt/pnpm/pnpm /pnpm/bin/pnpm
 # => /pnpm/bin/pnpm
 
 FROM scratch AS tini-amd64
-ARG TINI_VERSION
 ADD --checksum=sha256:c5b0666b4cb676901f90dfcb37106783c5fe2077b04590973b885950611b30ee --chmod=0755 \
-    https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-amd64 /tini
+    https://github.com/krallin/tini/releases/download/v0.19.0/tini-static-amd64 /tini
 FROM scratch AS tini-arm64
-ARG TINI_VERSION
 ADD --checksum=sha256:eae1d3aa50c48fb23b8cbdf4e369d0910dfc538566bfd09df89a774aa84a48b9 --chmod=0755 \
-    https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-arm64 /tini
+    https://github.com/krallin/tini/releases/download/v0.19.0/tini-static-arm64 /tini
 FROM tini-${TARGETARCH} AS tini
 # => /tini（0755）
 
