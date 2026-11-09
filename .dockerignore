@@ -1,3 +1,16 @@
+*
+
+# pnpm
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+
+!prisma
+
+# build
+!src
+!.swcrc
+
 # prisma generate の出力。COPY --exclude は転送した後のフィルタなので、
 # 転送とキャッシュキーから外すためにここで除外する。
 /src/generated
