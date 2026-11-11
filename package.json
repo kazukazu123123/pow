@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@discordjs/voice": "0.19.2",
-    "@prisma/client": "6.19.3",
+    "@prisma/client": "7.10.1",
     "@sapphire/framework": "5.5.1",
     "@sapphire/plugin-subcommands": "7.0.1",
     "@snazzah/davey": "0.1.12",
@@ -63,7 +63,7 @@
     "husky": "9.1.7",
     "npm-run-all2": "9.0.3",
     "oxfmt": "0.72.0",
-    "prisma": "6.19.3",
+    "prisma": "7.10.1",
     "typescript": "5.8.3",
     "typescript-eslint": "8.36.0"
   },
