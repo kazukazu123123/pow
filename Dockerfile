@@ -21,27 +21,25 @@ ADD --checksum=sha256:eae1d3aa50c48fb23b8cbdf4e369d0910dfc538566bfd09df89a774aa8
 FROM tini-${TARGETARCH} AS tini
 # => /tini（0755）
 
+# cache mount は中身を保証しない。後続段は store と cache の中身を前提にしているので使えない。
 FROM pnpm-base AS fetch-deps
 WORKDIR /_
-ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
-    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch
-# => /_/node_modules
+# => /_/node_modules, /pnpm-store, /pnpm-cache
 
 # fetch はルートの node_modules を作らないので Link する（devDependencies も含む）。
 FROM pnpm-base AS dev-deps
 WORKDIR /_
 COPY --link --from=fetch-deps /_/node_modules/ ./node_modules/
-ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
+# store と cache は install 中にしか要らない。
+RUN --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
+    --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
-    pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
+    pnpm install --frozen-lockfile --offline --ignore-scripts
 # => /_/node_modules
 
 # prisma generate は schema.prisma と node_modules の client 版にだけ依存し、src を読まない
@@ -73,10 +71,9 @@ RUN --mount=type=bind,from=dev-deps,source=/_/node_modules,target=/_/node_module
 # fetch がビルドを走らせるので、lock 済みの node をマウントする（node-gyp は pnpm 同梱のもの）。
 FROM pnpm-base AS fetch-prod
 WORKDIR /_
-ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
-    --mount=type=bind,from=dev-deps,source=/_/node_modules/node/bin/node,target=/usr/local/bin/node \
+RUN --mount=type=bind,from=dev-deps,source=/_/node_modules/node/bin/node,target=/usr/local/bin/node \
+    --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
+    --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch --prod
@@ -85,13 +82,13 @@ RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
 FROM pnpm-base AS prod-deps
 WORKDIR /_
 COPY --link --from=fetch-prod /_/node_modules/ ./node_modules/
-ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
+# fetch-prod は store も cache もレイヤーに残さないので、fetch-deps から受け取る。
+RUN --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
+    --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
-    pnpm install --frozen-lockfile --prefer-offline --prod --ignore-scripts
+    pnpm install --frozen-lockfile --offline --prod --ignore-scripts
 # => /_/node_modules
 
 FROM gcr.io/distroless/cc-debian13:nonroot@sha256:e792ab3d241a468a4fd7519ddbbebe66b49b5f365771716ea688ad40b6c6f1c2 AS runner
