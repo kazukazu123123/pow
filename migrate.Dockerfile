@@ -2,15 +2,15 @@
 
 # バージョンは package.json の devEngines.packageManager と揃える。
 FROM ghcr.io/pnpm/pnpm:12.16.1@sha256:33081d3d2c96ba582d316cfd630f0f43961d9c60ff919b50edd1835a1462976b AS pnpm
-# => /opt/pnpm/pnpm
+# => /opt/pnpm, /opt/pnpm/pnpm
 
 FROM buildpack-deps:26.10@sha256:1842c8766efc4bc743374913dbb2196ef9da2b8f1ba6fbbb68594ba7086a65ab AS pnpm-base
 ENV PNPM_HOME=/pnpm
-ENV PATH="$PNPM_HOME/bin:$PATH"
 ENV PNPM_CONFIG_STORE_DIR=/pnpm-store
 ENV PNPM_CONFIG_CACHE_DIR=/pnpm-cache
-COPY --link --from=pnpm /opt/pnpm/pnpm /pnpm/bin/pnpm
-# => /pnpm/bin/pnpm
+COPY --link --from=pnpm /opt/pnpm /opt/pnpm
+RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
+# => /opt/pnpm, /usr/local/bin/pnpm（symlink）
 
 # prisma CLI は devDependencies にある。本番依存を展開しないので、node-gyp を足す段は要らない。
 FROM pnpm-base AS fetch-deps

@@ -2,15 +2,15 @@
 
 # バージョンは package.json の devEngines.packageManager と揃える。
 FROM ghcr.io/pnpm/pnpm:12.16.1@sha256:33081d3d2c96ba582d316cfd630f0f43961d9c60ff919b50edd1835a1462976b AS pnpm
-# => /opt/pnpm/pnpm
+# => /opt/pnpm, /opt/pnpm/pnpm
 
 FROM buildpack-deps:26.10@sha256:1842c8766efc4bc743374913dbb2196ef9da2b8f1ba6fbbb68594ba7086a65ab AS pnpm-base
 ENV PNPM_HOME=/pnpm
-ENV PATH="$PNPM_HOME/bin:$PATH"
 ENV PNPM_CONFIG_STORE_DIR=/pnpm-store
 ENV PNPM_CONFIG_CACHE_DIR=/pnpm-cache
-COPY --link --from=pnpm /opt/pnpm/pnpm /pnpm/bin/pnpm
-# => /pnpm/bin/pnpm
+COPY --link --from=pnpm /opt/pnpm /opt/pnpm
+RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
+# => /opt/pnpm, /usr/local/bin/pnpm（symlink）
 
 FROM scratch AS tini-amd64
 ADD --checksum=sha256:c5b0666b4cb676901f90dfcb37106783c5fe2077b04590973b885950611b30ee --chmod=0755 \
@@ -21,24 +21,11 @@ ADD --checksum=sha256:eae1d3aa50c48fb23b8cbdf4e369d0910dfc538566bfd09df89a774aa8
 FROM tini-${TARGETARCH} AS tini
 # => /tini（0755）
 
-# 依存のビルドに node-gyp が要る（zlib-sync が node-gyp rebuild を持つ）。
-# pnpm-base に直接入れると pin の変更で全段のキャッシュが失われるので、この段にマウントする。
-FROM pnpm-base AS toolchain
-ARG TARGETPLATFORM
-# renovate: datasource=npm depName=node-gyp
-ARG NODE_GYP_VERSION=13.1.0
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
-    pnpm add --global node-gyp@${NODE_GYP_VERSION}
-# => /pnpm/bin/node-gyp と /pnpm/global（shim が ../global 配下のパッケージを解決する）
-
 FROM pnpm-base AS fetch-deps
 WORKDIR /_
 ARG TARGETPLATFORM
 RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
     --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
-    --mount=type=bind,from=toolchain,source=/pnpm/bin/node-gyp,target=/pnpm/bin/node-gyp \
-    --mount=type=bind,from=toolchain,source=/pnpm/global,target=/pnpm/global \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch
@@ -83,15 +70,13 @@ RUN --mount=type=bind,from=dev-deps,source=/_/node_modules,target=/_/node_module
 # => /_/dist（swc は src/generated も取り込むので dist に engine が入る）
 
 # 本番依存だけのツリーも fetch から直接作る（インストール済みのツリーから dev を削り切れない）。
-# fetch がビルドを走らせるので、lock 済みの node と node-gyp をマウントする。
+# fetch がビルドを走らせるので、lock 済みの node をマウントする（node-gyp は pnpm 同梱のもの）。
 FROM pnpm-base AS fetch-prod
 WORKDIR /_
 ARG TARGETPLATFORM
 RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
     --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
     --mount=type=bind,from=dev-deps,source=/_/node_modules/node/bin/node,target=/usr/local/bin/node \
-    --mount=type=bind,from=toolchain,source=/pnpm/bin/node-gyp,target=/pnpm/bin/node-gyp \
-    --mount=type=bind,from=toolchain,source=/pnpm/global,target=/pnpm/global \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch --prod
