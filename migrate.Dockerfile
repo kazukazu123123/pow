@@ -13,27 +13,25 @@ RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
 # => /opt/pnpm, /usr/local/bin/pnpm（symlink）
 
 # prisma CLI は devDependencies にある。本番依存を展開しないので、node-gyp を足す段は要らない。
+# cache mount は中身を保証しない。後続段は store と cache の中身を前提にしているので使えない。
 FROM pnpm-base AS fetch-deps
 WORKDIR /_
-ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
-    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch --dev
-# => /_/node_modules
+# => /_/node_modules, /pnpm-store, /pnpm-cache
 
 # fetch はルートの node_modules を作らないので Link する（devDependencies だけ）。
 FROM pnpm-base AS dev-deps
 WORKDIR /_
 COPY --link --from=fetch-deps /_/node_modules/ ./node_modules/
-ARG TARGETPLATFORM
-RUN --mount=type=cache,id=pnpm-store-$TARGETPLATFORM,target=/pnpm-store \
-    --mount=type=cache,id=pnpm-cache-$TARGETPLATFORM,target=/pnpm-cache \
+# store と cache は install 中にしか要らない。
+RUN --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
+    --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
-    pnpm install --frozen-lockfile --prefer-offline --dev --ignore-scripts
+    pnpm install --frozen-lockfile --offline --dev --ignore-scripts
 # => /_/node_modules
 
 FROM busybox:1.37-musl@sha256:5cec3fc171c87218698e85a52af7087de727372aae264a787b8112901a5b0092 AS busybox
