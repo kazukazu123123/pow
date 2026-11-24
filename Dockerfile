@@ -33,9 +33,8 @@ RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
 FROM pnpm-base AS dev-deps
 WORKDIR /_
 COPY --link --from=fetch-deps /_/node_modules/ ./node_modules/
-# store と cache は install 中にしか要らない。
-RUN --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
-    --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
+# cache は install 中にしか要らない。
+RUN --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
@@ -82,9 +81,8 @@ RUN --mount=type=bind,from=dev-deps,source=/_/node_modules/node/bin/node,target=
 FROM pnpm-base AS prod-deps
 WORKDIR /_
 COPY --link --from=fetch-prod /_/node_modules/ ./node_modules/
-# fetch-prod は store も cache もレイヤーに残さないので、fetch-deps から受け取る。
-RUN --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
-    --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
+# fetch-prod は cache をレイヤーに残さないので、fetch-deps から受け取る。
+RUN --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
