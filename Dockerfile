@@ -4,7 +4,7 @@
 FROM ghcr.io/pnpm/pnpm:12.16.1@sha256:33081d3d2c96ba582d316cfd630f0f43961d9c60ff919b50edd1835a1462976b AS pnpm
 # => /opt/pnpm, /opt/pnpm/pnpm
 
-FROM buildpack-deps:26.10@sha256:1842c8766efc4bc743374913dbb2196ef9da2b8f1ba6fbbb68594ba7086a65ab AS pnpm-base
+FROM buildpack-deps:26.10@sha256:6293c257b0fbcd30ba8142f7991d15f93228df6f4877a2ee141aee7281ba4ff8 AS pnpm-base
 ENV PNPM_HOME=/pnpm
 ENV PNPM_CONFIG_STORE_DIR=/pnpm-store
 ENV PNPM_CONFIG_CACHE_DIR=/pnpm-cache
