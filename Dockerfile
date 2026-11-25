@@ -24,6 +24,7 @@ FROM tini-${TARGETARCH} AS tini
 # cache mount は中身を保証しない。後続段は store と cache の中身を前提にしているので使えない。
 FROM pnpm-base AS fetch-deps
 WORKDIR /_
+ENV PNPM_CONFIG_PACKAGE_IMPORT_METHOD=hardlink
 RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch
@@ -32,6 +33,7 @@ RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
 # fetch はルートの node_modules を作らないので Link する（devDependencies も含む）。
 FROM pnpm-base AS dev-deps
 WORKDIR /_
+ENV PNPM_CONFIG_PACKAGE_IMPORT_METHOD=copy
 COPY --link --from=fetch-deps /_/node_modules/ ./node_modules/
 # cache は install 中にしか要らない。
 RUN --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
@@ -70,6 +72,7 @@ RUN --mount=type=bind,from=dev-deps,source=/_/node_modules,target=/_/node_module
 # fetch がビルドを走らせるので、lock 済みの node をマウントする（node-gyp は pnpm 同梱のもの）。
 FROM pnpm-base AS fetch-prod
 WORKDIR /_
+ENV PNPM_CONFIG_PACKAGE_IMPORT_METHOD=copy
 RUN --mount=type=bind,from=dev-deps,source=/_/node_modules/node/bin/node,target=/usr/local/bin/node \
     --mount=type=bind,from=fetch-deps,source=/pnpm-store,target=/pnpm-store \
     --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
@@ -80,6 +83,7 @@ RUN --mount=type=bind,from=dev-deps,source=/_/node_modules/node/bin/node,target=
 
 FROM pnpm-base AS prod-deps
 WORKDIR /_
+ENV PNPM_CONFIG_PACKAGE_IMPORT_METHOD=copy
 COPY --link --from=fetch-prod /_/node_modules/ ./node_modules/
 # fetch-prod は cache をレイヤーに残さないので、fetch-deps から受け取る。
 RUN --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \

@@ -16,6 +16,7 @@ RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
 # cache mount は中身を保証しない。後続段は store と cache の中身を前提にしているので使えない。
 FROM pnpm-base AS fetch-deps
 WORKDIR /_
+ENV PNPM_CONFIG_PACKAGE_IMPORT_METHOD=hardlink
 RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
     --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
     pnpm fetch --dev
@@ -24,6 +25,7 @@ RUN --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
 # fetch はルートの node_modules を作らないので Link する（devDependencies だけ）。
 FROM pnpm-base AS dev-deps
 WORKDIR /_
+ENV PNPM_CONFIG_PACKAGE_IMPORT_METHOD=copy
 COPY --link --from=fetch-deps /_/node_modules/ ./node_modules/
 # cache は install 中にしか要らない。
 RUN --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
