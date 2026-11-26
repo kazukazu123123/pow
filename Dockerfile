@@ -93,7 +93,7 @@ RUN --mount=type=bind,from=fetch-deps,source=/pnpm-cache,target=/pnpm-cache \
     pnpm install --frozen-lockfile --offline --prod --ignore-scripts
 # => /_/node_modules
 
-FROM gcr.io/distroless/cc-debian13:nonroot@sha256:e792ab3d241a468a4fd7519ddbbebe66b49b5f365771716ea688ad40b6c6f1c2 AS runner
+FROM gcr.io/distroless/cc-debian13:nonroot@sha256:29ee70762214fe8190cea04ef1c0a84a8365879e047ce8f911ae5a5ab2355fa2 AS runner
 ENV NODE_ENV=production
 ENV PNPM_HOME=/pnpm
 ENV PATH="$PNPM_HOME/bin:$PATH"
